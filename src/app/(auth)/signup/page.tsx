@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import axiosInstance from "@/lib/Axios";
 import { toast } from "sonner";
@@ -204,7 +204,7 @@ const SignupPage = () => {
             type="submit"
           >
             {isLoading ? (
-              <Loader className="size-4 text-white" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               "Create account"
             )}
