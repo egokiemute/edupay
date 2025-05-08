@@ -49,9 +49,9 @@ const signupSchema = z
     path: ["confirmPassword"],
   });
 
-const page = () => {
+const SignupPage = () => {
   // State to manage loading state
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Router instance for navigation
   const router = useRouter();
@@ -223,4 +223,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SignupPage;

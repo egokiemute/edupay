@@ -41,9 +41,11 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             picture: user.picture,
           };
-        } catch (error: any) {  // Added type annotation
+        } catch (error) {  // Added type annotation
           console.error("Authentication error:", error);
-          throw new Error(error.message || "Error connecting to database");
+          throw new Error(
+            error instanceof Error ? error.message : "Error connecting to database"
+          );
         }
       },
     }),

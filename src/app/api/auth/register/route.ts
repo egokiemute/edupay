@@ -4,8 +4,8 @@ import connectDB from "@/config/connectDB";
 // import { connectToDB } from "@/config/db"
 
 export async function POST(request: NextRequest) {
-    try {
-      const { firstname, lastname, email, password } = await request.json();
+  try {
+    const { firstname, lastname, email, password } = await request.json();
     if (!firstname || !lastname || !email || !password) {
       return NextResponse.json(
         { error: "Please fill all the fields" },
@@ -31,8 +31,9 @@ export async function POST(request: NextRequest) {
     });
     return NextResponse.json({ user }, { status: 201 });
   } catch (error) {
+    console.error("Error creating user:", error);
     return NextResponse.json(
-      { error: "Failed to create user" },
+      { error: `Failed to create user: ${error instanceof Error ? error.message : 'Unknown error'}` },
       { status: 500 }
     );
   }
