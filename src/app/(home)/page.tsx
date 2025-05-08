@@ -4,7 +4,7 @@ import { Progress } from "@/components/ui/progress";
 
 export default function Home() {
   return (
-    <div className="container">
+    <div className="container w-full">
       <Hero />
       <div className="flex flex-col items-center justify-center py-30 gap-y-4">
         <p>

@@ -51,7 +51,7 @@ export const Navbar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false); // State to manage sidebar open/close
 
   return (
-    <nav className="h-20 flex border-b justify-between font-medium bg-green-800">
+    <nav className="h-20 flex border-b justify-between font-medium bg-green-800 w-[100vw]">
       <Link
         href="/"
         className={cn(
