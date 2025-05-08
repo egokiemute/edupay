@@ -57,9 +57,9 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    session: async ({ session, token }: { session: any; token: any }) => {  // Added type annotations
+    session: async ({ session, token }) => {  // Added type annotations
       if (token) {
-        session.user.id = token.id;
+        session.user.id = token.id as string;
       }
       return session;
     },
