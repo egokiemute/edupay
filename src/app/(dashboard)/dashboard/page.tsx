@@ -49,10 +49,10 @@ const DashboardPage = () => {
             <div className="flex items-center space-x-4">
               {/* {session?.user && ( */}
               <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium text-gray-700">
-                  {/* Welcome, {session.user.name || 'User'} */}
+                {/* <span className="text-sm font-medium text-gray-700">
+                //   Welcome, {session.user.name || 'User'}
                   Welcome, User
-                </span>
+                </span> */}
                 <UserCircle className="h-8 w-8 text-gray-500" />
               </div>
               {/* )} */}
