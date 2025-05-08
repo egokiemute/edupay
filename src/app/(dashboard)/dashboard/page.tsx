@@ -1,16 +1,31 @@
 "use client";
-import React, { useState } from 'react';
-import { signOut } from 'next-auth/react';
+import React, { useState } from "react";
+import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { LogOut, UserCircle, Home, CreditCard, School, Settings } from 'lucide-react';
+import {
+  LogOut,
+  UserCircle,
+  Home,
+  CreditCard,
+  School,
+  Settings,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["700"],
+});
 
 const DashboardPage = () => {
-//   const { data: session, status } = useSession();
+  //   const { data: session, status } = useSession();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleSignOut = async () => {
     setIsLoggingOut(true);
-    await signOut({ callbackUrl: '/login' });
+    await signOut({ callbackUrl: "/login" });
   };
 
   return (
@@ -20,26 +35,35 @@ const DashboardPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-green-600">Edupay Portal</h1>
+              <Link
+                href="/"
+                className={cn(
+                  "pl-6 flex items-center text-3xl font-semibold text-white",
+                  poppins.className
+                )}
+              >
+                <span className="">Edu</span>
+                <span className="text-yellow-500">pay</span>
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
               {/* {session?.user && ( */}
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm font-medium text-gray-700">
-                    {/* Welcome, {session.user.name || 'User'} */}
-                    Welcome, User
-                  </span>
-                  <UserCircle className="h-8 w-8 text-gray-500" />
-                </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm font-medium text-gray-700">
+                  {/* Welcome, {session.user.name || 'User'} */}
+                  Welcome, User
+                </span>
+                <UserCircle className="h-8 w-8 text-gray-500" />
+              </div>
               {/* )} */}
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="flex items-center space-x-2 border-gray-300 hover:bg-gray-100 hover:text-red-500 transition-colors"
                 onClick={handleSignOut}
                 disabled={isLoggingOut}
               >
                 <LogOut className="h-4 w-4" />
-                <span>{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
+                <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
               </Button>
             </div>
           </div>
@@ -74,18 +98,26 @@ const DashboardPage = () => {
           {/* Main Content */}
           <div className="md:col-span-3">
             <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Welcome to Your Dashboard</h2>
+              <h2 className="text-lg font-medium text-gray-900 mb-4">
+                Welcome to Your Dashboard
+              </h2>
               <p className="text-gray-600 mb-4">
-                This is your Edupay School Fees Portal dashboard where you can manage your payments,
-                view your courses, and update your profile information.
+                This is your Edupay School Fees Portal dashboard where you can
+                manage your payments, view your courses, and update your profile
+                information.
               </p>
               <div className="bg-gray-50 p-4 rounded-md">
-                <h3 className="font-medium text-gray-700 mb-2">Quick Actions</h3>
+                <h3 className="font-medium text-gray-700 mb-2">
+                  Quick Actions
+                </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Button className="bg-green-600 hover:bg-green-700">
                     Make a Payment
                   </Button>
-                  <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50">
+                  <Button
+                    variant="outline"
+                    className="border-green-600 text-green-600 hover:bg-green-50"
+                  >
                     View Payment History
                   </Button>
                 </div>
