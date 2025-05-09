@@ -22,17 +22,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           error: "Token has expired!",
-          expired: true
+          expired: true,
         },
         { status: 400 }
       );
     }
 
     return NextResponse.json({
-        message: "Token is valid",
-        userId: typeof verifyToken === "object" && "id" in verifyToken ? verifyToken.id : null,
-        expired: false
-    })
+      message: "Token is valid",
+      userId:
+        typeof verifyToken === "object" && "id" in verifyToken
+          ? verifyToken.id
+          : null,
+      expired: false,
+    });
 
     // verify a token asymmetric
     // jwt.verify(token, cert, function(err, decoded) {
@@ -40,7 +43,12 @@ export async function POST(req: NextRequest) {
     // });
   } catch (error) {
     return NextResponse.json(
-      { error: "Something went wrong" },
+      {
+        success: false,
+        message: "An error occurred while trying to reset your password.",
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
+
       { status: 500 }
     );
   }

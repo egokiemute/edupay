@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
       id: userExist?._id?.toString(),
     };
 
-    let token = jwt.sign(payload, process.env.FORGOT_PASSWORD_SECRET_KEY!, {
+    const token = jwt.sign(payload, process.env.FORGOT_PASSWORD_SECRET_KEY!, {
       expiresIn: 60 * 60 //expires in 1hr
     });
 
