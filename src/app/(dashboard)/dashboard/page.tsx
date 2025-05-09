@@ -38,7 +38,7 @@ const DashboardPage = () => {
               <Link
                 href="/"
                 className={cn(
-                  "pl-6 flex items-center text-3xl font-semibold text-white",
+                  "pl-6 flex items-center text-3xl font-semibold text-green-800",
                   poppins.className
                 )}
               >
