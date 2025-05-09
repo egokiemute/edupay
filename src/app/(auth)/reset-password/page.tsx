@@ -140,11 +140,10 @@ const ResetPassword = () => {
           response.data.error || "Failed to reset password. Please try again."
         );
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error resetting password:", error);
       toast.error(
-        error.response?.data?.error ||
-          "Failed to reset password. Please try again."
+        "Failed to reset password. Please try again."
       );
     } finally {
       setIsLoading(false);
