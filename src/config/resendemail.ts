@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import { ReactElement } from "react";
 
-const resend = new Resend(process.env.RESEND_API_KEY as string);
+const resend = new Resend(process.env.RESEND_API_KEY! as string);
 
 export const sendEmail = async (
   email: string,

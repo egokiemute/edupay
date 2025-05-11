@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -38,7 +38,8 @@ const resetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
-const ResetPassword = () => {
+// Separate component that uses useSearchParams
+function ResetPasswordForm() {
   // State to manage loading and verification states
   const [isLoading, setIsLoading] = useState(false);
   const [isVerifying, setIsVerifying] = useState(true);
@@ -225,6 +226,20 @@ const ResetPassword = () => {
         </form>
       </Form>
     </div>
+  );
+}
+
+// Main component with Suspense
+const ResetPassword = () => {
+  return (
+    <Suspense fallback={
+      <div className="w-full max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md flex flex-col items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-green-600 mb-4" />
+        <p className="text-center">Loading...</p>
+      </div>
+    }>
+      <ResetPasswordForm />
+    </Suspense>
   );
 };
 
