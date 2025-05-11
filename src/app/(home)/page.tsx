@@ -1,13 +1,13 @@
 import { Hero } from "@/components/landing/Hero";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+// import { Button } from "@/components/ui/button";
+// import { Progress } from "@/components/ui/progress";
 
 export default function Home() {
   return (
     <div className="container w-full">
       <Hero />
       <div className="flex flex-col items-center justify-center py-30 gap-y-4">
-        <p>
+        {/* <p>
           Hello World! Am finally working with shadcn/ui and nextjs. To build
           Edupay V1
         </p>
@@ -16,7 +16,7 @@ export default function Home() {
         </div>
         <div>
           <Progress value={20} className="w-[200px]" />
-        </div>
+        </div> */}
         {/* <div>
           <Input placeholder="Student ID" className="w-[400px]" />
         </div>
