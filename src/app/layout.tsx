@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
-})
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,6 +22,8 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${dmSans.className} antialiased`}
+        data-new-gr-c-s-check-loaded="14.1234.0"
+        data-gr-ext-installed=""
       >
         {children}
         <Toaster />
