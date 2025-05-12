@@ -18,7 +18,6 @@ interface Payment {
 
 interface PaymentHistoryProps {
   payments?: Payment[] | { data?: Payment[] }; // Make it more flexible
-  onViewReceipt?: (paymentId: string) => void;
   onExportCSV?: () => void;
 }
 
@@ -48,7 +47,6 @@ const getStatusBadgeClass = (status: string): string => {
 
 const PaymentHistory: React.FC<PaymentHistoryProps> = ({
   payments,
-  onViewReceipt,
   onExportCSV,
 }) => {
   // Normalize payments to always be an array

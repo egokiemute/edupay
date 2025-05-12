@@ -1,7 +1,13 @@
-// app/api/payment/update-status/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import PaymentModel from "@/models/PaymentModel";
+
+// Define a custom error interface
+interface CustomError {
+  message?: string;
+  name?: string;
+  code?: string;
+}
 
 // Connect to MongoDB if not already connected
 const connectDB = async () => {
@@ -9,8 +15,9 @@ const connectDB = async () => {
     try {
       await mongoose.connect(process.env.MONGODB_URI || "");
       console.log("MongoDB connected in update status endpoint");
-    } catch (error) {
-      console.error("MongoDB connection error in update status endpoint:", error);
+    } catch (error: unknown) {
+      const processedError = error as CustomError;
+      console.error("MongoDB connection error in update status endpoint:", processedError.message);
     }
   }
 };
@@ -65,10 +72,18 @@ export async function POST(req: NextRequest) {
         _id: undefined
       }
     });
-  } catch (error: any) {
-    console.error("Payment status update error:", error);
+  } catch (error: unknown) {
+    // Type-safe error handling
+    const processedError = error as CustomError;
+    
+    console.error("Payment status update error:", processedError);
+    
     return NextResponse.json(
-      { error: error.message || "Failed to update payment status" },
+      { 
+        error: processedError.message || "Failed to update payment status",
+        errorName: processedError.name,
+        errorCode: processedError.code
+      },
       { status: 500 }
     );
   }

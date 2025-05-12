@@ -2,6 +2,13 @@ import connectDB from "@/config/connectDB";
 import PaymentModel from "@/models/PaymentModel";
 import { NextRequest, NextResponse } from "next/server";
 
+// Define a custom error interface
+interface CustomError {
+  message: string;
+  code?: string;
+  name?: string;
+}
+
 export async function GET(req: NextRequest) {
   try {
     await connectDB(); // Ensure database connection
@@ -14,13 +21,19 @@ export async function GET(req: NextRequest) {
       { success: true, data: payments },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error("Error fetching payments:", error);
+  } catch (error: unknown) {
+    // Type-safe error handling
+    const processedError = error as CustomError;
+    
+    console.error("Error fetching payments:", processedError);
+    
     return NextResponse.json(
       {
         success: false,
         message: "Failed to fetch payments",
-        error: error.message,
+        error: processedError.message || "An unknown error occurred",
+        errorName: processedError.name,
+        errorCode: processedError.code
       },
       { status: 500 }
     );

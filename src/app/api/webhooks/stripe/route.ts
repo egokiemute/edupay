@@ -1,9 +1,15 @@
-// app/api/webhooks/stripe/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { headers } from "next/headers";
 import mongoose from "mongoose";
 import PaymentModel from "@/models/PaymentModel";
+
+// Define custom error interfaces for type-safe error handling
+interface WebhookError {
+  message: string;
+  code?: string;
+  type?: string;
+}
 
 // Initialize Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
@@ -16,8 +22,9 @@ const connectDB = async () => {
     try {
       await mongoose.connect(process.env.MONGODB_URI || "");
       console.log("MongoDB connected in webhook handler");
-    } catch (error) {
-      console.error("MongoDB connection error in webhook:", error);
+    } catch (error: unknown) {
+      const processedError = error as WebhookError;
+      console.error("MongoDB connection error in webhook:", processedError.message);
     }
   }
 };
@@ -36,8 +43,9 @@ export async function POST(req: NextRequest) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET || ""
     );
-  } catch (err: any) {
-    console.error(`Webhook signature verification failed: ${err.message}`);
+  } catch (err: unknown) {
+    const processedError = err as WebhookError;
+    console.error(`Webhook signature verification failed: ${processedError.message}`);
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
@@ -93,10 +101,18 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ received: true });
-  } catch (error) {
-    console.error("Error processing webhook:", error);
+  } catch (error: unknown) {
+    // Type-safe error handling
+    const processedError = error as WebhookError;
+    
+    console.error("Error processing webhook:", processedError.message);
+    
     return NextResponse.json(
-      { error: "Error processing webhook" },
+      { 
+        error: "Error processing webhook",
+        details: processedError.message,
+        type: processedError.type
+      },
       { status: 500 }
     );
   }

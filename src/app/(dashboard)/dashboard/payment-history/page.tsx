@@ -163,7 +163,6 @@ const PaymentHistoryPage: React.FC = () => {
       ) : (
         <PaymentHistory
           payments={payments}
-          onViewReceipt={handleViewReceipt}
           onExportCSV={handleExportCSV}
         />
       )}

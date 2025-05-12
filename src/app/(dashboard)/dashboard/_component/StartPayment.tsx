@@ -22,6 +22,17 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { loadStripe } from "@stripe/stripe-js";
 
+// Custom error type for more precise error handling
+interface CustomError {
+  response?: {
+    data?: {
+      error?: string;
+    };
+    status?: number;
+  };
+  message?: string;
+}
+
 // Make sure to add your Stripe publishable key here
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "");
 
@@ -220,13 +231,15 @@ const StartPayment = () => {
         toast.error("Failed to create payment session. Please try again.");
       }
       
-    } catch (error: any) {
-      console.error("Payment error:", error);
+    } catch (error: unknown) {
+      // Type-safe error handling
+      const processedError = error as CustomError;
+      console.error("Payment error:", processedError);
       
       // Extract and display more helpful error messages
       const errorMessage = 
-        error.response?.data?.error || 
-        error.message || 
+        processedError.response?.data?.error || 
+        processedError.message || 
         "Failed to process payment. Please try again.";
         
       toast.error(errorMessage);

@@ -1,7 +1,13 @@
-// app/api/payment/verify/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import PaymentModel from "@/models/PaymentModel";
+
+// Define a custom error interface
+interface CustomError {
+  message?: string;
+  name?: string;
+  code?: string;
+}
 
 // Connect to MongoDB if not already connected
 const connectDB = async () => {
@@ -9,8 +15,9 @@ const connectDB = async () => {
     try {
       await mongoose.connect(process.env.MONGODB_URI || "");
       console.log("MongoDB connected in verify endpoint");
-    } catch (error) {
-      console.error("MongoDB connection error in verify endpoint:", error);
+    } catch (error: unknown) {
+      const processedError = error as CustomError;
+      console.error("MongoDB connection error in verify endpoint:", processedError.message);
     }
   }
 };
@@ -59,10 +66,18 @@ export async function GET(req: NextRequest) {
       message: "Payment verified and status updated to completed",
       payment: formattedPayment,
     });
-  } catch (error: any) {
-    console.error("Payment verification error:", error);
+  } catch (error: unknown) {
+    // Type-safe error handling
+    const processedError = error as CustomError;
+    
+    console.error("Payment verification error:", processedError);
+    
     return NextResponse.json(
-      { error: error.message || "Failed to verify payment" },
+      { 
+        error: processedError.message || "Failed to verify payment",
+        errorName: processedError.name,
+        errorCode: processedError.code
+      },
       { status: 500 }
     );
   }

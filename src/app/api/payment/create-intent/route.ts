@@ -5,6 +5,21 @@ import { v4 as uuidv4 } from "uuid";
 import PaymentModel from "@/models/PaymentModel";
 import connectDB from "@/config/connectDB";
 
+// Define custom error interfaces for type-safe error handling
+interface StripeCustomError {
+  message: string;
+  code?: string;
+  type?: string;
+  param?: string;
+  raw?: unknown;
+}
+
+interface GenericCustomError {
+  message: string;
+  code?: string;
+  type?: string;
+}
+
 // Initialize Stripe with your secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2025-04-30.basil",
@@ -104,37 +119,45 @@ export async function POST(req: NextRequest) {
       });
       
       return NextResponse.json({ sessionId: session.id, referenceId });
-    } catch (stripeError: any) {
-      console.error("Stripe session creation error:", stripeError);
+    } catch (stripeError: unknown) {
+      // Type-safe Stripe error handling
+      const processedError = stripeError as StripeCustomError;
+      console.error("Stripe session creation error:", processedError);
       
       // Update payment status to failed
       await PaymentModel.findOneAndUpdate(
         { referenceId },
-        { status: "failed", errorDetails: stripeError.message }
+        { 
+          status: "failed", 
+          errorDetails: processedError.message 
+        }
       );
       
       return NextResponse.json(
         {
-          error: stripeError.message,
-          code: stripeError.code || 'stripe_error',
-          type: stripeError.type || 'unknown'
+          error: processedError.message,
+          code: processedError.code || 'stripe_error',
+          type: processedError.type || 'unknown'
         },
         { status: 400 }
       );
     }
 
-  } catch (error: any) {
-    console.error("Payment creation error:", error);
+  } catch (error: unknown) {
+    // Type-safe generic error handling
+    const processedError = error as GenericCustomError & { raw?: unknown };
+    console.error("Payment creation error:", processedError);
     
     // Add more context to the error for easier debugging
-    let errorMessage = error.message || "Failed to create payment";
+    let errorMessage = processedError.message || "Failed to create payment";
     let statusCode = 500;
     
     // Handle specific Stripe errors
-    if (error.type === 'StripeInvalidRequestError') {
+    if (processedError.type === 'StripeInvalidRequestError') {
       statusCode = 400;
-      if (error.param) {
-        errorMessage = `Invalid Stripe parameter: ${error.param} - ${errorMessage}`;
+      const stripeError = processedError as StripeCustomError;
+      if (stripeError.param) {
+        errorMessage = `Invalid Stripe parameter: ${stripeError.param} - ${errorMessage}`;
       }
     }
     
@@ -143,7 +166,10 @@ export async function POST(req: NextRequest) {
       if (typeof referenceId !== 'undefined') {
         await PaymentModel.findOneAndUpdate(
           { referenceId },
-          { status: "failed", errorDetails: errorMessage }
+          { 
+            status: "failed", 
+            errorDetails: errorMessage 
+          }
         );
       }
     } catch (dbError) {
@@ -153,9 +179,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { 
         error: errorMessage,
-        code: error.code || 'unknown',
-        type: error.type || 'unknown',
-        details: error.raw ? error.raw : undefined
+        code: processedError.code || 'unknown',
+        type: processedError.type || 'unknown',
+        details: processedError.raw
       },
       { status: statusCode }
     );
