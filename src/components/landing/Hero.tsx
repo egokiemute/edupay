@@ -14,11 +14,11 @@ export const Hero = () => {
 
       {/* Content container */}
       <div className="relative z-10 container mx-auto px-6">
-        <div className="max-w-3xl">
-          <p className="text-gray-300 text-lg md:text-2xl mb-2">Welcome</p>
-          <h1 className="text-white text-4xl md:text-8xl font-bold mb-6">
-            Edupay School Fees Portal
+        <div className="max-w-3xl flex flex-col items-center text-center mx-auto">
+          <h1 className="text-white text-4xl md:text-8xl font-bold mb-4">
+            Simplify School Fee Payments with Edupay
           </h1>
+          <p className="text-gray-300 text-lg md:text-2xl mb-2">Your secure, convenient, and efficient fee payment solutions for students.</p>
 
           <div className="flex flex-wrap gap-4">
             <Button
