@@ -1,6 +1,6 @@
 import connectDB from "@/config/connectDB";
 import PaymentModel from "@/models/PaymentModel";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 // Define a custom error interface
 interface CustomError {
@@ -9,7 +9,7 @@ interface CustomError {
   name?: string;
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     await connectDB(); // Ensure database connection
 

@@ -74,10 +74,10 @@ const PaymentHistoryPage: React.FC = () => {
     }
   };
 
-  const handleViewReceipt = (paymentId: string) => {
-    console.log(`View receipt for payment: ${paymentId}`);
-    window.open(`/receipts/${paymentId}`, '_blank');
-  };
+  // const handleViewReceipt = (paymentId: string) => {
+  //   console.log(`View receipt for payment: ${paymentId}`);
+  //   window.open(`/receipts/${paymentId}`, '_blank');
+  // };
 
   const handleExportCSV = () => {
     console.log('Exporting payment history to CSV');
