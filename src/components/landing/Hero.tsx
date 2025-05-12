@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export const Hero = () => {
   return (
     <div
-      className="relative h-[90vh] w-[100vw] bg-cover bg-center flex items-center"
+      className="relative h-[90vh] w-full bg-cover bg-center flex items-center"
       style={{ backgroundImage: "url('/assets/hero-banner.jpg')" }}
     >
       {/* Dark overlay */}

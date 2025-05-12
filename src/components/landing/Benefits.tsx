@@ -39,7 +39,7 @@ const Benefits = () => {
             src="/assets/benefits.jpg" // replace with your own image
             alt="Payment system illustration"
             layout="fill"
-            objectFit="contain"
+            objectFit="cover"
             className="rounded-xl shadow-lg"
           />
         </div>

@@ -5,14 +5,11 @@ import Testimony from "@/components/landing/Testimony";
 
 export default function Home() {
   return (
-    <div className="container w-full">
+    <div className="">
       <Hero />
       <Benefits />
       <Features />
       <Testimony />
-      <div className="flex flex-col items-center justify-center py-30 gap-y-4">
-        {/* next section */}
-      </div>
     </div>
   );
 }
