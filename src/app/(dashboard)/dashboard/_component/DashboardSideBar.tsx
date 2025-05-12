@@ -6,13 +6,13 @@ import {
   CreditCard,
   Home,
   LogOut,
-  School,
   Settings,
   UserCircle,
 } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 const poppins = Poppins({
@@ -21,12 +21,37 @@ const poppins = Poppins({
 });
 
 const DashboardSideBar = () => {
+  const session = useSession();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const pathname = usePathname();
+
+  const { data } = session;
 
   const handleSignOut = async () => {
     setIsLoggingOut(true);
     await signOut({ callbackUrl: "/login" });
   };
+
+  const sidebarItems = [
+    {
+      href: "/dashboard",
+      icon: Home,
+      label: "Dashboard",
+      activeClass: pathname === "/dashboard" ? "bg-green-50 text-green-600" : "hover:bg-gray-50",
+    },
+    {
+      href: "/dashboard/payment-history",
+      icon: CreditCard,
+      label: "Payments",
+      activeClass: pathname === "/dashboard/payment-history" ? "bg-green-50 text-green-600" : "hover:bg-gray-50",
+    },
+    {
+      href: "/dashboard/settings",
+      icon: Settings,
+      label: "Settings",
+      activeClass: pathname === "/dashboard/settings" ? "bg-green-50 text-green-600" : "hover:bg-gray-50",
+    }
+  ];
 
   return (
     <Sidebar className="px-3 space-y-10 p-4 bg-white flex flex-col relative items-start justify-between overflow-hidden">
@@ -47,36 +72,30 @@ const DashboardSideBar = () => {
         </SidebarHeader>
         <div className="pt-8">
           <div className="space-y-2">
-            <div className="flex items-center space-x-2 p-2 bg-green-50 text-green-600 rounded-md">
-              <Home className="h-5 w-5" />
-              <span className="font-medium">Dashboard</span>
-            </div>
-            <div className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded-md cursor-pointer">
-              <CreditCard className="h-5 w-5 text-gray-500" />
-              <span>Payments</span>
-            </div>
-            <div className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded-md cursor-pointer">
-              <School className="h-5 w-5 text-gray-500" />
-              <span>Courses</span>
-            </div>
-            <div className="flex items-center space-x-2 p-2 hover:bg-gray-50 rounded-md cursor-pointer">
-              <Settings className="h-5 w-5 text-gray-500" />
-              <span>Settings</span>
-            </div>
+            {sidebarItems.map((item) => (
+              <Link 
+                key={item.href} 
+                href={item.href}
+                className={`flex items-center space-x-2 p-2 rounded-md cursor-pointer ${item.activeClass}`}
+              >
+                <item.icon className="h-5 w-5 text-gray-500" />
+                <span className="font-medium">{item.label}</span>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
       <SidebarFooter className="fixed bottom-10">
-        <div className="flex flex-col items-start space-y-4">
-          {/* {session?.user && ( */}
+        <div className="flex flex-col items-start space-y-4 w-full">
           <div className="flex items-center space-x-2">
             <UserCircle className="h-8 w-8 text-gray-500" />
-            <span className="text-sm font-medium text-gray-700">User</span>
+            <span className="text-sm font-medium text-gray-700">
+              {data?.user?.name || "User"}
+            </span>
           </div>
-          {/* )} */}
           <Button
-            variant="outline"
-            className="flex items-center space-x-2 border-gray-300 hover:bg-gray-100 hover:text-red-500 transition-colors"
+            variant="destructive"
+            className="cursor-pointer border-0 w-full"
             onClick={handleSignOut}
             disabled={isLoggingOut}
           >

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import PaymentHistory from '../_component/PaymentHistory';
+import axiosInstance from '@/lib/Axios';
 
 // Define the payment interface
 interface Payment {
@@ -13,7 +14,7 @@ interface Payment {
   referenceId: string;
   status: 'completed' | 'pending' | 'failed';
   paymentMethod: string;
-  semester: string;
+  level: string;
   feeType: string;
 }
 
@@ -29,73 +30,25 @@ const samplePayments: Payment[] = [
     referenceId: 'TRX12345678',
     status: 'completed',
     paymentMethod: 'Credit Card',
-    semester: 'Spring 2025',
+    level: 'Spring 2025',
     feeType: 'Tuition Fee',
   },
-  {
-    id: '2',
-    studentId: 'STU002',
-    studentName: 'Jane Smith',
-    amount: 2500,
-    currency: 'usd',
-    paymentDate: '2025-03-10T14:45:00Z',
-    referenceId: 'TRX87654321',
-    status: 'completed',
-    paymentMethod: 'Bank Transfer',
-    semester: 'Spring 2025',
-    feeType: 'Accommodation Fee',
-  },
-  {
-    id: '3',
-    studentId: 'STU003',
-    studentName: 'Michael Johnson',
-    amount: 1000,
-    currency: 'usd',
-    paymentDate: '2025-04-01T09:15:00Z',
-    referenceId: 'TRX98765432',
-    status: 'pending',
-    paymentMethod: 'Stripe',
-    semester: 'Spring 2025',
-    feeType: 'Lab Fee',
-  },
-  {
-    id: '4',
-    studentId: 'STU001',
-    studentName: 'John Doe',
-    amount: 500,
-    currency: 'usd',
-    paymentDate: '2025-02-28T16:20:00Z',
-    referenceId: 'TRX23456789',
-    status: 'failed',
-    paymentMethod: 'Credit Card',
-    semester: 'Spring 2025',
-    feeType: 'Library Fee',
-  },
-  {
-    id: '5',
-    studentId: 'STU004',
-    studentName: 'Emily Davis',
-    amount: 3500,
-    currency: 'usd',
-    paymentDate: '2025-03-25T11:10:00Z',
-    referenceId: 'TRX34567890',
-    status: 'completed',
-    paymentMethod: 'Stripe',
-    semester: 'Spring 2025',
-    feeType: 'Tuition Fee',
-  },
+  // ... other sample payments
 ];
 
 const PaymentHistoryPage: React.FC = () => {
   // State to control whether to use sample data or fetch from API
-  const [useSampleData, setUseSampleData] = useState<boolean>(true);
-  const [payments, setPayments] = useState<Payment[]>(samplePayments);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [useSampleData, setUseSampleData] = useState<boolean>(false); // Set to false to use API by default
+  const [payments, setPayments] = useState<Payment[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Only fetch from API if not using sample data
-    if (!useSampleData) {
+    // Set initial data based on data source preference
+    if (useSampleData) {
+      setPayments(samplePayments);
+      setLoading(false);
+    } else {
       fetchPaymentHistory();
     }
   }, [useSampleData]);
@@ -104,18 +57,18 @@ const PaymentHistoryPage: React.FC = () => {
   const fetchPaymentHistory = async () => {
     try {
       setLoading(true);
-      // Replace with your actual API endpoint
-      const response = await fetch('/api/payments/history');
+      setError(null);
+      const response = await axiosInstance.get<Payment[]>('/api/payment/history');
       
-      if (!response.ok) {
-        throw new Error('Failed to fetch payment history');
+      if (response.data) {
+        setPayments(response.data);
+      } else {
+        setPayments([]);
       }
-      
-      const data = await response.json();
-      setPayments(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'An error occurred while fetching payment data');
       console.error('Error fetching payment history:', err);
+      setPayments([]); // Set empty array on error
     } finally {
       setLoading(false);
     }
@@ -134,7 +87,7 @@ const PaymentHistoryPage: React.FC = () => {
       'Student ID',
       'Amount',
       'Fee Type',
-      'Semester',
+      'Level',
       'Payment Date',
       'Reference ID',
       'Status',
@@ -148,7 +101,7 @@ const PaymentHistoryPage: React.FC = () => {
         payment.studentId,
         payment.amount,
         `"${payment.feeType}"`,
-        `"${payment.semester}"`,
+        `"${payment.level}"`,
         `"${new Date(payment.paymentDate).toLocaleString()}"`,
         payment.referenceId,
         payment.status,
@@ -200,6 +153,12 @@ const PaymentHistoryPage: React.FC = () => {
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
           <strong className="font-bold">Error:</strong>
           <span className="block sm:inline"> {error}</span>
+          <button 
+            onClick={fetchPaymentHistory} 
+            className="mt-2 bg-red-100 hover:bg-red-200 text-red-800 font-bold py-1 px-3 rounded"
+          >
+            Retry
+          </button>
         </div>
       ) : (
         <PaymentHistory

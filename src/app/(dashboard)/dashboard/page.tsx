@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import StartPayment from "./_component/StartPayment";
 
 const DashboardPage = () => {
   return (
@@ -24,14 +25,15 @@ const DashboardPage = () => {
                 <h3 className="font-medium text-gray-700 mb-2">
                   Quick Actions
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Button className="bg-green-600 hover:bg-green-700">
+                <div className="flex items-center gap-5">
+                  {/* <Button className="bg-green-800 hover:bg-green-700">
                     Make a Payment
-                  </Button>
-                  <Link href="/payment-history">
+                  </Button> */}
+                  <StartPayment />
+                  <Link href="/dashboard/payment-history">
                     <Button
                       variant="outline"
-                      className="border-green-600 text-green-600 hover:bg-green-50"
+                      className="border-green-600 text-green-600 hover:bg-green-50 w-fit"
                     >
                       View Payment History
                     </Button>
