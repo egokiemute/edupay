@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
 import axiosInstance from "@/lib/Axios";
@@ -22,7 +22,7 @@ interface PaymentInfo {
   feeType: string;
 }
 
-const PaymentSuccessPage = () => {
+const PaymentSuccessContent = () => {
   const searchParams = useSearchParams();
   const [payment, setPayment] = useState<PaymentInfo | null>(null);
   const [loading, setLoading] = useState(true);
@@ -90,7 +90,7 @@ const PaymentSuccessPage = () => {
 
   if (error || !payment) {
     return (
-      <div className="flex flex-col items-center justify-cente p-4">
+      <div className="flex flex-col items-center justify-center p-4">
         <div className="bg-white p-6 rounded-lg shadow-md max-w-md w-full">
           <div className="text-red-500 text-center mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -175,6 +175,20 @@ const PaymentSuccessPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+// Wrapper component to handle Suspense
+const PaymentSuccessPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+        <p className="mt-4 text-gray-600">Loading...</p>
+      </div>
+    }>
+      <PaymentSuccessContent />
+    </Suspense>
   );
 };
 
