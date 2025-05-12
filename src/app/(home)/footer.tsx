@@ -36,7 +36,7 @@ export const Footer = () => {
             </li>
             <li className="flex items-center gap-2">
               <Phone className="w-4 h-4" />
-              +234 812 345 6789
+              09998776654
             </li>
           </ul>
         </div>
@@ -59,8 +59,14 @@ export const Footer = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t py-4 px-6 text-center text-sm text-gray-500">
-        &copy; {new Date().getFullYear()} Edupay, Inc. All rights reserved.
+      <div className="border-t py-4 px-6 text-center text-sm text-gray-500 space-y-1">
+        <p>&copy; {new Date().getFullYear()} Edupay, Inc. All rights reserved.</p>
+        <p>
+          Designed by{" "}
+          <span className="font-medium text-gray-700">
+            Crowther Samuel, Odjidja Jared, and Bemile Emmanuel
+          </span>
+        </p>
       </div>
     </footer>
   );

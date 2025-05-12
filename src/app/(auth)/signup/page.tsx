@@ -176,7 +176,7 @@ const SignupPage = () => {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder="Email, e.g joy@edupay.org"
+                    placeholder="Email, e.g 10****@upsmail.edu.gh"
                     {...field}
                     value={field.value ?? ""}
                   />
