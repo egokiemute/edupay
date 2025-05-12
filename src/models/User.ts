@@ -8,6 +8,7 @@ export interface IUser {
   email: string;
   picture: string;
   password: string;
+  studentId: string;
   // role: string; // "admin" | "user"
   refreshToken: string;
   isVerified?: boolean;
@@ -22,6 +23,7 @@ const userSchema = new mongoose.Schema<IUser>(
     email: { type: String, required: true, unique: true },
     picture: { type: String, default: "" },
     password: { type: String, required: true },
+    studentId: { type: String },
     refreshToken: { type: String, default: "" },
     isVerified: { type: Boolean, default: false },
   },

@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 interface RegisterFormInputs {
   firstName: string;
   lastName: string;
+  studentId: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -36,6 +37,9 @@ const signupSchema = z
     lastName: z
       .string()
       .min(3, { message: "Last name must be at least 3 characters long" }),
+    studentId: z
+      .string()
+      .min(6, { message: "Student ID must be at least 6 characters long" }),
     email: z.string().email({ message: "Invalid email address" }),
     password: z
       .string()
@@ -63,6 +67,7 @@ const SignupPage = () => {
       firstName: "",
       lastName: "",
       email: "",
+      studentId: "",
       password: "",
       confirmPassword: "",
     },
@@ -77,6 +82,7 @@ const SignupPage = () => {
       firstname: data.firstName,
       lastname: data.lastName,
       email: data.email,
+      studentId: data.studentId,
       password: data.password,
     };
     console.log(payload);
@@ -139,6 +145,22 @@ const SignupPage = () => {
                 <FormControl>
                   <Input
                     placeholder="Last name (surname)"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="studentId"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    placeholder="Student ID"
                     {...field}
                     value={field.value ?? ""}
                   />

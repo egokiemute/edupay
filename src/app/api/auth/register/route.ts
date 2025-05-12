@@ -5,8 +5,8 @@ import connectDB from "@/config/connectDB";
 
 export async function POST(request: NextRequest) {
   try {
-    const { firstname, lastname, email, password } = await request.json();
-    if (!firstname || !lastname || !email || !password) {
+    const { firstname, lastname, studentId, email, password } = await request.json();
+    if (!firstname || !lastname || !studentId || !email || !password) {
       return NextResponse.json(
         { error: "Please fill all the fields" },
         { status: 400 }
@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
     const user = await UserModel.create({
       firstname,
       lastname,
+      studentId,
       email,
       password,
     });

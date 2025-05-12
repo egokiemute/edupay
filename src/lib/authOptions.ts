@@ -39,6 +39,7 @@ export const authOptions: NextAuthOptions = {
             id: user._id.toString(),
             name: user.firstname,
             email: user.email,
+            studentId: user.studentId,
             picture: user.picture,
           };
         } catch (error) {  // Added type annotation
