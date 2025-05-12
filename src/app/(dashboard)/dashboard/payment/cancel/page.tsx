@@ -16,9 +16,19 @@ interface PaymentInfo {
   referenceId: string;
   feeType: string;
   semester: string;
+  status?: string;
 }
 
-const PaymentCancelPage = () => {
+interface CustomError {
+  message?: string;
+  response?: {
+    data?: {
+      error?: string;
+    };
+  };
+}
+
+const PaymentCancelContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [payment, setPayment] = useState<PaymentInfo | null>(null);
@@ -61,9 +71,16 @@ const PaymentCancelPage = () => {
         } else {
           setError("Could not retrieve payment information");
         }
-      } catch (err) {
-        console.error("Payment information error:", err);
-        setError("Could not retrieve payment details. Please contact support.");
+      } catch (err: unknown) {
+        const processedError = err as CustomError;
+        console.error("Payment information error:", processedError);
+        
+        const errorMessage = 
+          processedError.response?.data?.error || 
+          processedError.message || 
+          "Could not retrieve payment details. Please contact support.";
+        
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
@@ -155,4 +172,4 @@ const PaymentCancelPage = () => {
   );
 };
 
-export default PaymentCancelPage;
+export default PaymentCancelContent;
