@@ -3,13 +3,14 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import StartPayment from "./_component/StartPayment";
+import RecentPayments from "./_component/RecentPayments";
 
 const DashboardPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Dashboard Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="flex flex-col gap-8">
           {/* Main Content */}
           <div className="md:col-span-3">
             <div className="bg-white shadow rounded-lg p-6">
@@ -30,18 +31,19 @@ const DashboardPage = () => {
                     Make a Payment
                   </Button> */}
                   <StartPayment />
-                  <Link href="/dashboard/payment-history">
+                  {/* <Link href="/dashboard/payment-history">
                     <Button
                       variant="outline"
                       className="border-green-600 text-green-600 hover:bg-green-50 w-fit"
                     >
                       View Payment History
                     </Button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>
           </div>
+          <RecentPayments />
         </div>
       </div>
     </div>

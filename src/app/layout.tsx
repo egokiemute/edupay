@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Provider from "@/Provider/Provider";
+// import UserProvider from "@/contexts/UserContext";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -26,7 +27,11 @@ export default function RootLayout({
         data-new-gr-c-s-check-loaded="14.1234.0"
         data-gr-ext-installed=""
       >
-        <Provider>{children}</Provider>
+        <Provider>
+          {/* <UserProvider> */}
+            {children}
+          {/* </UserProvider> */}
+        </Provider>
         <Toaster />
       </body>
     </html>
