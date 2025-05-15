@@ -7,7 +7,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useUser } from "@/contexts/UserContext";
+// import { useUser } from "@/contexts/UserContext";
 import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
 import { Poppins } from "next/font/google";
@@ -21,11 +21,11 @@ const poppins = Poppins({
 
 const DashboardHeader = () => {
   const session = useSession();
-  const { user, loading, error, refreshUserData } = useUser();
+  // const { user } = useUser();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // console.log("session ", session);
-  console.log(user)
+  // console.log(user)
 
   const { data } = session;
   console.log("name ", data);

@@ -9,13 +9,18 @@ interface SessionUser {
   email?: string;
   id?: string;
   sub?: string;
-  [key: string]: any;
+  [key: string]: string | number | boolean | undefined;
 }
 
-interface Session {
-  user?: SessionUser;
-  [key: string]: any;
-}
+type Session = {
+  user: {
+    email: string;
+    id?: string;
+    sub?: string;
+    [key: string]: string | number | boolean | undefined;
+  };
+  [key: string]: string | number | boolean | object | undefined;
+};
 
 export async function GET(req: NextRequest) {
   try {

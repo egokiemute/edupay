@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { ArrowLeft, ArrowRight, RefreshCcw } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Select,

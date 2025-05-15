@@ -37,7 +37,10 @@ export async function GET(req: NextRequest) {
     }
 
     // Build query
-    const query: Record<string, any> = {};
+    const query: Partial<{
+      studentId: string;
+      status: "pending" | "completed" | "failed";
+    }> = {};
     
     // If studentId is provided, use it directly
     if (studentId) {
@@ -66,7 +69,7 @@ export async function GET(req: NextRequest) {
     
     // Add status filter if provided
     if (status && ["pending", "completed", "failed"].includes(status)) {
-      query.status = status;
+      query.status = status as "pending" | "completed" | "failed";
     }
     
     // Calculate pagination

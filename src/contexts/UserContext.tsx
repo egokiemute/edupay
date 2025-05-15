@@ -22,7 +22,7 @@ export interface User {
 interface ApiErrorResponse {
   success: false;
   message: string;
-  [key: string]: any;
+  [key: string]: string | number | boolean | undefined;
 }
 
 // Define the context type
