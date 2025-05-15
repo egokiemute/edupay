@@ -116,7 +116,7 @@ const RecentPayments = () => {
       if (data.success) {
         setPayments(data.payments);
         setPagination(data.pagination);
-        setSummary(data.summary);
+        setSummary(summary);
       } else {
         throw new Error("Failed to retrieve payment data");
       }
