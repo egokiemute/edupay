@@ -35,14 +35,14 @@ interface Payment {
   feeType: string;
 }
 
-interface PaginationData {
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-}
+// interface PaginationData {
+//   total: number;
+//   page: number;
+//   limit: number;
+//   totalPages: number;
+//   hasNextPage: boolean;
+//   hasPrevPage: boolean;
+// }
 
 interface PaymentSummary {
   completedTotal: number;
@@ -348,7 +348,7 @@ const AllPayments = () => {
         <div className="flex justify-between items-center">
           <p className="text-sm text-gray-600">
             Showing {filteredPayments.length} of {statusFilter && statusFilter !== "all" 
-              ? payments.filter(p => p.status === statusFilter).length 
+              ? payments.filter(() => statusFilter).length 
               : payments.length} records
           </p>
           <div className="flex gap-2">

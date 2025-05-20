@@ -24,14 +24,14 @@ interface User {
  }
  
 
-interface PaginationData {
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-}
+// interface PaginationData {
+//   total: number;
+//   page: number;
+//   limit: number;
+//   totalPages: number;
+//   hasNextPage: boolean;
+//   hasPrevPage: boolean;
+// }
 
 interface ApiResponse {
   success: boolean;
@@ -228,7 +228,7 @@ const AllUsers = () => {
         <div className="flex justify-between items-center">
           <p className="text-sm text-gray-600">
             Showing {filteredUsers.length} of {statusFilter && statusFilter !== "all" 
-              ? users.filter(p => statusFilter).length 
+              ? users.filter(() => statusFilter).length 
               : users.length} records
           </p>
           <div className="flex gap-2">

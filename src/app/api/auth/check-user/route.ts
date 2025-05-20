@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import authOptions from "@/lib/authOptions";
 
 interface SessionUser {
@@ -12,7 +12,7 @@ interface Session {
   expires?: string;
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // Using authOptions directly without req/res
     const session = await getServerSession(authOptions) as Session | null;
