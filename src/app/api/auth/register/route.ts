@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       studentId,
       email,
       password,
-      role: role || "admin", // Default to 'admin' if no role is provided
+      role: role || "user", // Default to 'admin' if no role is provided
     });
     return NextResponse.json({ user }, { status: 201 });
   } catch (error) {
