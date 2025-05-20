@@ -5,7 +5,7 @@ import connectDB from "@/config/connectDB";
 
 export async function POST(request: NextRequest) {
   try {
-    const { firstname, lastname, studentId, email, password } = await request.json();
+    const { firstname, lastname, studentId, email, password, role } = await request.json();
     if (!firstname || !lastname || !studentId || !email || !password) {
       return NextResponse.json(
         { error: "Please fill all the fields" },
@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
       studentId,
       email,
       password,
+      role: role || "admin", // Default to 'admin' if no role is provided
     });
     return NextResponse.json({ user }, { status: 201 });
   } catch (error) {

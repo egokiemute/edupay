@@ -55,12 +55,14 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
+        token.role = user.role;
         token.id = user.id;
       }
       return token;
     },
     session: async ({ session, token }) => {  // Added type annotations
       if (token) {
+        session.user.role = token.role as string;
         session.user.id = token.id as string;
       }
       return session;

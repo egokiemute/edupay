@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react"; // Changed from Loader to Loader2
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
@@ -30,7 +30,6 @@ const loginSchema = z.object({
 // Derive the type from the schema
 type LoginFormInputs = z.infer<typeof loginSchema>;
 
-// Renamed to LoginPage with capital L for React component best practices
 const LoginPage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,7 +54,14 @@ const LoginPage = () => {
         toast.error(result.error || "Invalid email or password");
       } else {
         toast.success("Login successful");
-        router.push("/dashboard");
+        
+        // No need to check role with API - middleware will handle redirects
+        // NextAuth.js will update the session, and middleware will redirect
+        // based on the role stored in the JWT token
+        
+        // Optionally refresh the page to trigger middleware
+        // or simply wait for NextAuth to update the client-side session
+        router.refresh();
       }
     } catch (error) {
       toast.error("An error occurred during login");
@@ -79,7 +85,7 @@ const LoginPage = () => {
                   <Input
                     placeholder="Email, e.g 10****@upsmail.edu.gh"
                     {...field}
-                    type="email" // Added type="email" for better mobile keyboards
+                    type="email"
                   />
                 </FormControl>
                 <FormMessage />

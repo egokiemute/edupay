@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema<IUser>(
     email: { type: String, required: true, unique: true },
     picture: { type: String, default: "" },
     password: { type: String, required: true },
-    role: { type: String, default: "user" },
+    role: { type: String, default: "admin" },
     studentId: { type: String },
     refreshToken: { type: String, default: "" },
     isVerified: { type: Boolean, default: false },

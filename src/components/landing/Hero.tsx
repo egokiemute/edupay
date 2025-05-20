@@ -33,7 +33,7 @@ export const Hero = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 h-full flex items-center justify-center">
         <div className="max-w-3xl flex flex-col items-center text-center">
-          <h1 className="text-white text-4xl md:text-7xl font-bold mb-4">
+          <h1 className="text-yellow-300 text-center text-4xl md:text-7xl font-bold mb-4">
             Simplify School Fee Payments with Edupay
           </h1>
           <p className="text-gray-300 text-lg md:text-2xl mb-6">

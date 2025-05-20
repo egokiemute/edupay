@@ -21,19 +21,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${dmSans.className} antialiased`}
-        data-new-gr-c-s-check-loaded="14.1234.0"
-        data-gr-ext-installed=""
-      >
-        <Provider>
+    <Provider>
+      <html lang="en">
+        <body
+          className={`${dmSans.className} antialiased`}
+          data-new-gr-c-s-check-loaded="14.1234.0"
+          data-gr-ext-installed=""
+        >
           {/* <UserProvider> */}
-            {children}
+          {children}
           {/* </UserProvider> */}
-        </Provider>
-        <Toaster />
-      </body>
-    </html>
+          <Toaster />
+        </body>
+      </html>
+    </Provider>
   );
 }

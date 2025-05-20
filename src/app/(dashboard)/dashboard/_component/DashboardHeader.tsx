@@ -1,11 +1,11 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 // import { useUser } from "@/contexts/UserContext";
 import { cn } from "@/lib/utils";
@@ -39,7 +39,6 @@ const DashboardHeader = () => {
     <nav className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-         
           <div className="flex items-center md:hidden">
             <Link
               href="/"
@@ -52,26 +51,23 @@ const DashboardHeader = () => {
               <span className="text-yellow-500">pay</span>
             </Link>
           </div>
-           <div></div>
+          <div></div>
           <div className="flex items-center space-x-4">
             {/* {session?.user && ( */}
             <div className="flex items-center space-x-2">
               {/* <UserCircle className="h-8 w-8 text-gray-500" /> */}
-              <Popover>
+              {/* <Popover>
                 <PopoverTrigger>
                   <Avatar>
                     <AvatarImage src={data?.user?.image as string} />
                     <AvatarFallback>
-                      {/* {getAvatarDisplayName(data?.user?.firstname, data?.user?.lastname)}
-                       */}
-                      OG
+                      <p className="font-semibold py-2 text-black">
+                        {data?.user?.name || "User"}
+                      </p>
                     </AvatarFallback>
                   </Avatar>
                 </PopoverTrigger>
                 <PopoverContent>
-                  <p className="font-semibold py-2 text-black">
-                    {data?.user?.name || "User"}
-                  </p>
                   <div className="p-[0.5px] bg-gray=200"></div>
                   <Button
                     variant="destructive"
@@ -82,7 +78,7 @@ const DashboardHeader = () => {
                     <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
                   </Button>
                 </PopoverContent>
-              </Popover>
+              </Popover> */}
               <span className="text-sm font-medium text-gray-700">
                 Welcome, {data?.user?.name || "User"}
               </span>
