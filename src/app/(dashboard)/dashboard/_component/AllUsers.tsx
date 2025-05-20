@@ -87,7 +87,7 @@ const AllUsers = () => {
   // Filter and paginate users
   useEffect(() => {
     // Apply filters
-    let result = [...users];
+    const result = [...users];
 
     // Calculate pagination
     const total = result.length;
