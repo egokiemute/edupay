@@ -64,7 +64,7 @@ export const Footer = () => {
         <p>
           Designed by{" "}
           <span className="font-medium text-gray-700">
-            Crowther Samuel, Odjidja Jared, and Bemile Emmanuel
+            Crowther Samuel and Odjidja Jared.
           </span>
         </p>
       </div>
